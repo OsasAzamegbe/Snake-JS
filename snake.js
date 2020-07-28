@@ -28,7 +28,11 @@ const nextHead = state => state.snake.length === 0 ? {x: state.cols - 2, y: 6} :
     y: mod(state.snake[0].y + state.moves[0].y)(state.rows)
 }
 
-const nextMoves = state =>state.moves.length > 1 ? state.moves.slice(1) : state.moves
+const nextMoves = state => state.moves.length > 1 ? state.moves.slice(1) : state.moves
+
+const nextScore = state => willCrash(state) ? 0 : (
+    willEat(state) ? (state.score >= 300 ? state.score + 50 : (state.score >= 50 ? state.score + 15 : state.score + 5)) : state.score
+)
 
 const nextSnake = state => willCrash(state) ? [] : (
     willEat(state) ? [nextHead(state)].concat(state.snake) : 
@@ -40,6 +44,7 @@ const initState = () => ({
     rows: 15,
     cols: 20, // row-col ratio 3:4
     moves: [WEST],
+    score: 0,
     snake: [],
     apple: {x: 6, y: 6},
 })
@@ -49,6 +54,7 @@ const nextState = state => ({
     rows: state.rows,
     cols: state.cols,
     moves: nextMoves(state),
+    score: nextScore(state),
     snake: nextSnake(state),
     apple: nextApple(state)
 })

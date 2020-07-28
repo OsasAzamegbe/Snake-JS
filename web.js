@@ -5,6 +5,9 @@ let state = initState()
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+// score
+let score = document.getElementById('score')
+
 // map position values to canvas size
 const x = col => Math.round(col * canvas.width / state.cols)
 const y = row => Math.round(row * canvas.height / state.rows)
@@ -23,6 +26,8 @@ const draw = () => {
     ctx.fillStyle = 'rgb(255, 20, 20)' //bright red
     ctx.fillRect(x(state.apple.x), y(state.apple.y), x(1), y(1))
 
+    // update score
+    score.innerText = state.score;
     
     // draw crash
   if (state.snake.length == 0) {
