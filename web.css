@@ -4,8 +4,8 @@ html, body{
     align-items: center;
     background: rgb(5, 5, 5);
     text-align: center;
-    margin: 0;
-    padding: 0;
     height: 100%;
-    color: rgb(34, 29, 29);
+    margin: 0;
+    padding: 0;    
+    color: rgb(26, 26, 26);
 }
