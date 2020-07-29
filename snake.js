@@ -30,14 +30,11 @@ const nextHead = state => state.snake.length === 0 ? {x: state.cols - 2, y: 6} :
 
 const nextMoves = state => state.moves.length > 1 ? state.moves.slice(1) : state.moves
 
-const nextScore = state => willCrash(state) ? 0 : (
-    willEat(state) ? (state.score >= 300 ? state.score + 50 : (state.score >= 50 ? state.score + 15 : state.score + 5)) : state.score
-)
+const nextScore = state => willEat(state) ? (state.score >= 300 ? state.score + 50 : 
+    (state.score >= 50 ? state.score + 15 : state.score + 5)) : state.score
 
-const nextSnake = state => willCrash(state) ? [] : (
-    willEat(state) ? [nextHead(state)].concat(state.snake) : 
-    [nextHead(state)].concat(dropLast(state.snake))
-)
+const nextSnake = state => willEat(state) ? [nextHead(state)].concat(state.snake) : 
+[nextHead(state)].concat(dropLast(state.snake))
 
 // Initial state of game
 const initState = () => ({
@@ -50,7 +47,7 @@ const initState = () => ({
 })
 
 // compute next game state
-const nextState = state => ({
+const nextState = state => willCrash(state) ? initState() : ({
     rows: state.rows,
     cols: state.cols,
     moves: nextMoves(state),
