@@ -20,7 +20,7 @@ const draw = () => {
 
     // draw snake
     ctx.fillStyle = 'rgb(30, 255, 30)' // bright green
-    state.snake.map(pos => ctx.fillRect(x(pos.x), y(pos.y), x(1), y(1)))
+    state.snake.forEach(pos => ctx.fillRect(x(pos.x), y(pos.y), x(1), y(1)))
 
     // draw apple
     ctx.fillStyle = 'rgb(255, 20, 20)' //bright red
