@@ -1,2 +1,3 @@
 # Snake-JS
-Snake game with JS for web and cli
+Client-side Snake game with vanilla JS 
+https://snakegame-js.netlify.app/
