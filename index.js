@@ -1,5 +1,5 @@
 // initialize game state
-let state = initState()
+let state = initState();
 
 // canvas variables
 const canvas = document.getElementById('canvas')
@@ -49,8 +49,35 @@ const step = t1 => t2 => {
 
 }
 
+//screen swipe variables
+let xStart = null;
+let yStart = null;
+let xEnd = null;
+let yEnd = null;
+
+//screen swipe functions
+const swipeHandler = () => {
+    const xDiff = xStart - xEnd;
+    const yDiff = yStart - yEnd;
+
+    if(Math.abs(xDiff) > Math.abs(yDiff)){
+        if(xDiff > 0){
+            state = enqueue(state)(WEST);
+        }else{
+            state = enqueue(state)(EAST);
+        }
+    }else{
+        if(yDiff > 0){
+            state = enqueue(state)(NORTH);
+        }else{
+            state = enqueue(state)(SOUTH);
+        }
+    }
+};
+
 // eventlisteners
 const eventListeners = ()=> {
+    const body = window.document.body
     window.addEventListener('keydown', e => {
         switch(e.key) {
             case 'w' : case 'i': case 'ArrowUp': state = enqueue(state)(NORTH); break;
@@ -59,6 +86,17 @@ const eventListeners = ()=> {
             case 'd': case 'l': case 'ArrowRight': state = enqueue(state)(EAST); break;
         }
     })
+
+    body.addEventListener('touchstart', (e) => {
+        xStart = e.changedTouches[0].screenX;
+        yStart = e.changedTouches[0].screenY;
+    }, false);
+
+    body.addEventListener('touchend', (e) => {
+        xEnd = e.changedTouches[0].screenX;
+        yEnd = e.changedTouches[0].screenY;
+        swipeHandler()
+    }, false);
 }
 
 // listen for DOM loaded
